@@ -15,17 +15,14 @@ app.get('/api/hello', async (req, res) => {
         clientIp = '';
     }
 
-    const IPINFO_TOKEN = process.env.IPINFO_TOKEN;
-    const OPENWEATHERMAP_API_KEY = process.env.OPENWEATHERMAP_API_KEY;
-
     try {
         let location = 'Unknown';
 
         if (clientIp) {
-            const locationResponse = await axios.get(`https://ipinfo.io/${clientIp}/json?token=${IPINFO_TOKEN}`);
+            const locationResponse = await axios.get(`https://ipinfo.io/${clientIp}/json?token=5efae1190a428`);
             location = locationResponse.data.city || 'Unknown';
         }
-        const weatherResponse = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`);
+        const weatherResponse = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=98d479a425d1a70b61341c8f8b615126`);
         const temperature = weatherResponse.data.main.temp;
 
         res.json({

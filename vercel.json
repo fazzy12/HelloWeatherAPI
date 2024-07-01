@@ -11,9 +11,5 @@
         "src": "/(.*)",
         "dest": "/server.js"
       }
-    ],
-    "env": {
-      "IPINFO_TOKEN": "@ipinfo_token",
-      "OPENWEATHERMAP_API_KEY": "@openweathermap_api_key"
-    }
+    ]
   }
