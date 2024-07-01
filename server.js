@@ -9,7 +9,6 @@ app.get('/api/hello', async (req, res) => {
   const clientIp = req.ip || req.connection.remoteAddress;
 
   try {
-    // Get location and temperature data
     const geoResponse = await axios.get(`http://ipapi.co/${clientIp}`);
     const apiKey = process.env.OPENWEATHER_API_KEY
     const weatherResponse = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${geoResponse.data.city}&appid=${apiKey}&units=metric`);
