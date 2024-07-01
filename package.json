@@ -9,7 +9,6 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fazzy12/HelloWeatherAPI.git"
@@ -22,6 +21,7 @@
   "homepage": "https://github.com/fazzy12/HelloWeatherAPI#readme",
   "dependencies": {
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.4"
   }

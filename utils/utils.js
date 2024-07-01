@@ -1,25 +1,40 @@
 import axios from 'axios';
 
 export const getClientIp = (req) => {
-    return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const xForwardedFor = req.headers['x-forwarded-for'];
+    if (xForwardedFor) {
+        const ips = xForwardedFor.split(',');
+        return ips[0].trim();
+    }
+    return req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 };
 
 export const getGeolocation = async (ip) => {
     try {
-        const response = await axios.get(`http://ip-api.com/json/${ip}`);
-        return response.data;
+        const response = await axios.get(`https://ipapi.co/${ip}/json/`);
+
+        if (response.status === 200) {
+            return {
+                city: response.data.city,
+                country: response.data.country_name,
+                latitude: response.data.latitude,
+                longitude: response.data.longitude,
+            };
+        } else {
+            throw new Error('Failed to fetch geolocation data');
+        }
     } catch (error) {
         throw new Error('Failed to fetch geolocation data');
     }
 };
 
 export const getWeather = async (location) => {
+    const apiKey = process.env.OPENWEATHER_API_KEY;
+
     try {
-        // Replace 'YOUR_WEATHER_API_KEY' with your actual API key for the weather service
-        const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=YOUR_WEATHER_API_KEY&q=${location}`);
-        return response.data.current.temp_c;
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`);
+        return response.data.main.temp;
     } catch (error) {
         throw new Error('Failed to fetch weather data');
     }
 };
-
