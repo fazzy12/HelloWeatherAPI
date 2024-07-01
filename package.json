@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "helloweatherapi",
   "version": "1.0.0",
   "description": "hello API",
@@ -23,6 +22,7 @@
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "request-ip": "^3.3.0"
   }
 }
