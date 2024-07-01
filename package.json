@@ -1,0 +1,28 @@
+{
+  "type": "module",
+  "name": "helloweatherapi",
+  "version": "1.0.0",
+  "description": "hello API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fazzy12/HelloWeatherAPI.git"
+  },
+  "author": "fazzy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fazzy12/HelloWeatherAPI/issues"
+  },
+  "homepage": "https://github.com/fazzy12/HelloWeatherAPI#readme",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4"
+  }
+}
