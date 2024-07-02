@@ -5,16 +5,14 @@ require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 
+// Enable trust proxy
+app.set('trust proxy', true);
 
 app.get('/api/hello', async (req, res) => {
     const visitorName = req.query.visitor_name || 'Visitor';
 
-    let clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-
-    // If it's an IPv6 address, extract the IPv4 part
-    if (clientIp.substr(0, 7) == "::ffff:") {
-        clientIp = clientIp.substr(7);
-    }
+    // Retrieve IP from headers
+    const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
 
     const apiKey = process.env.OPENWEATHERMAP_API_KEY;
     const ip_token = process.env.IPINFO_TOKEN;
@@ -26,7 +24,7 @@ app.get('/api/hello', async (req, res) => {
     try {
         let location = 'Unknown';
 
-        if (clientIp && clientIp !== '::1' && clientIp !== '127.0.0.1') {
+        if (clientIp) {
             try {
                 const locationResponse = await axios.get(`https://ipinfo.io/${clientIp}/json?token=${ip_token}`);
                 location = locationResponse.data.city || 'Unknown';
@@ -54,6 +52,12 @@ app.get('/api/hello', async (req, res) => {
         console.log('Request processed successfully.');
     } catch (error) {
         console.error('Unexpected error:', error.message);
+
+        if (error.response) {
+            console.error('Error Response Data:', error.response.data);
+            console.error('Error Response Status:', error.response.status);
+        }
+
         res.status(500).json({ error: 'An unexpected error occurred' });
     }
 });
